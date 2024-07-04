@@ -139,7 +139,7 @@
 
 ### 流体粒子方法(Fluid particle methods)
 
-### 基于粒子方法的特点(Features of particle based methods)
+#### 基于粒子方法的特点(Features of particle based methods)
 
 1. **分辨单个粒子(Individual particles are resolved)**
    - 模拟中可以追踪和分析每一个单独的粒子
@@ -181,7 +181,7 @@
    - MD适用于纳米尺度，可以模拟分子间的相互作用。
    - SPH适用于较大尺度，将流体离散为宏观粒子，计算效率更高。
 
-### 应用举例
+#### 应用举例
 
 - **分子动力学(MD)**：模拟纳米通道中的水分子传输
 - **光滑粒子流体动力学(SPH)**：模拟微流控芯片中的液滴形成和合并过程
@@ -672,3 +672,336 @@ C_{\text{th}} = \frac{Q_{\text{th}}}{\Delta T} = V \rho c_p
    - 适用于研究组件间的相互作用和耦合。
 
 通过以上比较，可以看出CFD和系统级网络模拟在适用场景和计算效率上的差异。CFD适用于需要详细了解空间分布变量的情况，但计算耗时较长；而系统级网络模拟适用于需要快速了解系统动态和组件相互作用的情况，但不提供详细的空间分辨信息。
+
+---
+
+# Example
+
+## P30
+
+### Numerical solution for Hagen-Poiseuille flow
+
+#### 流动的基本方程：
+流动由纳维-斯托克斯方程（NSE）控制：
+\[ \frac{\partial}{\partial t} (\rho \vec{v}) + \vec{v} \cdot \nabla (\rho \vec{v}) = -\nabla p + \nabla \cdot (\eta \nabla \vec{v}) + f_{\text{volume}} \]
+
+#### 简化条件：
+1. **二维描述**：可以在柱坐标系中对三维流场进行二维描述。
+2. **稳定流**：假设流动是稳定的，不随时间变化。
+3. **无外力**：假设没有外部作用力影响流动。
+4. **完全发展**：假设流动已经完全发展。
+
+#### 基本方程：
+已简化的哈根-泊肃叶流动方程为：
+\[ \frac{d^2 v}{dr^2} + \frac{1}{r} \frac{dv}{dr} + \frac{\Delta P}{\eta L} = 0 \]
+
+#### 问题的一维化：
+- **一维问题**：在径向 \( r \) 方向上分布 \( N \) 个节点。
+- **节点数量**：\( N = 5 \) 个节点。
+
+#### 离散化方案：
+- **有限差分法**：使用有限差分方法对微分方程进行离散化。
+
+#### 边界条件：
+- 边界条件为：
+\[ v_{i=0} = v_{i=4} = 0 \]
+
+#### 有限差分法的基本原理：
+基于微分商的定义：
+\[ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \]
+
+#### 有限差分表达式：
+1. **一阶前向差分**：
+\[ \left( \frac{\partial f}{\partial x} \right)_i = \frac{f_{i+1} - f_i}{\Delta x} \]
+
+2. **二阶中心差分**：
+\[ \left( \frac{\partial^2 f}{\partial x^2} \right)_i = \frac{f_{i+1} - 2f_i + f_{i-1}}{\Delta x^2} \]
+
+这些表达式是微分方程的近似解法，并且这些近似会带来一定的误差。
+
+#### 泰勒展开：
+对于 \( f(x + \Delta x) \) 的泰勒展开式：
+\[ f(x + \Delta x) = f(x) + \Delta x \frac{df(x)}{dx} + \frac{\Delta x^2}{2} \frac{d^2 f(x)}{dx^2} + \cdots \]
+
+从这个展开式中可以推导出：
+\[ \frac{f(x+\Delta x) - f(x)}{\Delta x} = \frac{df(x)}{dx} + \frac{\Delta x}{2} \frac{d^2 f(x)}{dx^2} + \cdots \]
+
+进一步整理得到：
+\[ \frac{df(x)}{dx} = \frac{f(x+\Delta x) - f(x)}{\Delta x} - \frac{\Delta x}{2} \frac{d^2 f(x)}{dx^2} + \cdots \]
+
+所以，有限差分的表达式实际上是包含了一个误差项 \( O(\Delta x) \)。
+
+#### 有限差分的误差：
+前向有限差分法的误差为 \( O(\Delta x) \)。
+
+#### 提高精度的方法：
+更精确或高阶的有限差分可以通过组合不同的泰勒展开式来获得，例如：
+- 对于一阶中心差分：使用 \( f(x + \Delta x) \) 和 \( f(x - \Delta x) \)
+- 对于二阶前向差分：使用 \( f(x + \Delta x) \) 和 \( f(x + 2\Delta x) \)
+
+#### 基本方程：
+在圆形通道中的泊肃叶流动微分方程（PDF）：
+\[ r \cdot \frac{d^2 v}{dr^2} + \frac{dv}{dr} + r \cdot \frac{\Delta P}{\eta L} = 0 \]
+
+#### 离散化：
+对方程进行离散化处理：
+\[ r_i \cdot \frac{v_{i+1} - 2v_i + v_{i-1}}{\Delta r^2} + \frac{v_{i+1} - v_i}{\Delta r} + r_i \cdot C = 0 \]
+其中，C 是一个常数，表示 \(\frac{\Delta P}{\eta L}\)。
+
+通过离散化，偏微分方程（PDE）转化为线性方程组。
+
+#### 节点记号：
+- **\( i = 0 \)**: \( v_0 = 0 \) （边界条件）
+- **\( i = 1 \)**: \( r_1 \left( \frac{v_2 - 2v_1 + v_0}{\Delta r^2} \right) + \left( \frac{v_2 - v_1}{\Delta r} \right) + r_1 \cdot C = 0 \)
+- **\( i = 2 \)**: \( r_2 \left( \frac{v_3 - 2v_2 + v_1}{\Delta r^2} \right) + \left( \frac{v_3 - v_2}{\Delta r} \right) + r_2 \cdot C = 0 \)
+- **\( i = 3 \)**: \( r_3 \left( \frac{v_4 - 2v_3 + v_2}{\Delta r^2} \right) + \left( \frac{v_4 - v_3}{\Delta r} \right) + r_3 \cdot C = 0 \)
+- **\( i = 4 \)**: \( v_4 = 0 \) （边界条件）
+
+#### 矩阵表示法：
+通过矩阵表示法将问题简化为线性方程组：
+\[ 
+A \cdot \vec{v} = \vec{b} 
+\]
+其中，矩阵 \( A \) 和向量 \( \vec{v} \) 表示为：
+\[ 
+A = \begin{pmatrix}
+1 & 0 & 0 & 0 & 0 \\
+-1 & 1 & 0 & 0 & 0 \\
+0 & 0 & -1 & 1 & 0 \\
+0 & 0 & 1 & -2 & 1 \\
+0 & 0 & 0 & 0 & 1
+\end{pmatrix}, 
+\quad 
+\vec{v} = \begin{pmatrix}
+v_0 \\
+v_1 \\
+v_2 \\
+v_3 \\
+v_4
+\end{pmatrix},
+\quad 
+\vec{b} = \begin{pmatrix}
+0 \\
+0.125 \\
+0 \\
+-0.125 \\
+0
+\end{pmatrix} 
+\]
+
+#### 线性方程组求解：
+将线性方程组转化为可数值求解的形式：
+\[ 
+A \cdot \vec{v} = \vec{b} \quad \Rightarrow \quad \vec{v} = A^{-1} \vec{b} 
+\]
+
+#### 实际数值的代入：
+- 管道半径 \( R = 100 \times 10^{-6} \, \text{m} \)
+- 压差 \( \Delta P = 10000 \, \text{Pa} \)
+- 管道长度 \( L = 10 \times 10^{-2} \, \text{m} \)
+- 动力粘度 \( \eta = 0.001 \, \text{Pa} \cdot \text{s} \)
+- 节点间距 \( \Delta R = 50 \times 10^{-6} \, \text{m} \)
+
+#### 生成的线性方程组：
+根据前述公式和这些实际数值，生成的线性方程组如下：
+
+\[ 
+A \cdot \vec{v} = \vec{b} 
+\]
+
+其中，
+\[ 
+A = \begin{pmatrix}
+1 & 0 & 0 & 0 & 0 \\
+-1 & 1 & 0 & 0 & 0 \\
+0 & 0 & -1 & 1 & 0 \\
+0 & 0 & 1 & -2 & 1 \\
+0 & 0 & 0 & 0 & 1
+\end{pmatrix}, 
+\quad 
+\vec{v} = \begin{pmatrix}
+v_0 \\
+v_1 \\
+v_2 \\
+v_3 \\
+v_4
+\end{pmatrix},
+\quad 
+\vec{b} = \begin{pmatrix}
+0 \\
+0.125 \\
+0 \\
+-0.125 \\
+0
+\end{pmatrix} 
+\]
+
+##E# 数值解在 \( i = 1 \) （节点1）处的计算：
+使用之前的离散化公式计算节点1处的速度 \( v_1 \)：
+
+\[ 
+r_1 \left( \frac{v_2 - 2v_1 + v_0}{\Delta r^2} \right) + \left( \frac{v_2 - v_1}{\Delta r} \right) + r_1 C = 0 
+\]
+
+将具体数值代入：
+\[ 
+-50 \times 10^{-6} \, \text{m} \left( \frac{v_2 - 2v_1 + v_0}{(50 \times 10^{-6} \, \text{m})^2} \right) + \left( \frac{v_2 - v_1}{50 \times 10^{-6} \, \text{m}} \right) - 50 \times 10^{-6} \, \text{m} \cdot 10^8 \frac{1}{\text{m} \cdot \text{s}} = 0 
+\]
+
+进一步简化：
+\[ 
+\frac{-v_2 + 2v_1 - v_0}{50 \times 10^{-6} \, \text{m}} + \frac{v_2 - v_1}{50 \times 10^{-6} \, \text{m}} - 50 \times 10^{-6} \, \text{m} \cdot 10^8 \frac{1}{\text{m} \cdot \text{s}} = 0 
+\]
+
+得到：
+\[ 
+v_1 = 50 \times 10^{-6} \, \text{m} \cdot 50 \times 10^{-6} \, \text{m} \cdot 10^8 \frac{1}{\text{m} \cdot \text{s}} = 0.25 \frac{\text{m}}{\text{s}} 
+\]
+
+#### 解析解在 \( r = -50 \, \mu \text{m} \) （节点1）处的计算：
+解析解公式：
+\[ 
+v_z(r) = \frac{\Delta P}{4 \eta L} (R^2 - r^2) 
+\]
+
+将具体数值代入：
+\[ 
+v_z(50 \, \mu \text{m}) = \frac{10000 \, \text{Pa}}{4 \cdot 0.001 \, \text{Pa} \cdot \text{s} \cdot 0.1 \, \text{m}} ( (100 \times 10^{-6} \, \text{m})^2 - (50 \times 10^{-6} \, \text{m})^2 ) 
+\]
+
+进一步计算：
+\[ 
+v_z(50 \, \mu \text{m}) = \frac{10000}{0.4} \cdot (10000 - 2500) \times 10^{-12} \, \text{m}^2 = 0.1875 \frac{\text{m}}{\text{s}} 
+\]
+
+#### 对比数值解与解析解：
+通过对比数值解和解析解，可以验证数值方法的准确性。数值解在节点1处的速度为 \( 0.25 \frac{\text{m}}{\text{s}} \)，解析解在相同位置的速度为 \( 0.1875 \frac{\text{m}}{\text{s}} \)。虽然有些许差异，但整体趋势和数量级是一致的，验证了数值解的合理性。
+
+#### 数值解与解析解对比：
+- 在 \( r = -50 \, \mu \text{m} \) （节点1）处的解：
+  - 解析解：\( 0.1875 \, \frac{\text{m}}{\text{s}} \)
+  - 数值解：\( 0.25 \, \frac{\text{m}}{\text{s}} \)
+
+#### 结果差异的原因：
+##### 数值误差：
+1. **粗网格使用**：只用了5个节点（N=5），网格较粗。
+2. **使用前向差分**：
+   - 前向差分法存在 \( O(\Delta x) \) 量级的误差，这会导致计算结果不够精确。
+
+#### 图示说明：
+右侧的图表显示了径向位置上的速度分布对比：
+- **蓝色曲线**：解析解
+- **橙色曲线**：使用5个节点的数值解
+
+可以看到，数值解在节点处与解析解有一定的偏差，尤其是在径向距离较大的区域。这表明，尽管数值解能够大致反映流动的趋势，但由于使用了较粗的网格和前向差分法，导致了较大的误差。
+
+#### 模拟结果质量的依赖因素：
+1. **网格质量**：
+   - 网格越细，数值解的精度通常越高。
+   - 使用更细密的网格可以减少数值误差。
+
+2. **离散化方法的质量**：
+   - 离散化方法的选择会影响数值解的精度。
+   - 高阶离散化方法可以减少误差。
+
+#### 图示说明：
+右侧图表显示了不同节点数情况下径向速度分布的对比：
+- **蓝色曲线**：解析解
+- **橙色曲线**：5个节点的数值解
+- **绿色曲线**：9个节点的数值解
+- **紫色曲线**：11个节点的数值解
+- **红色曲线**：19个节点的数值解
+- **黄色曲线**：31个节点的数值解
+- **青色曲线**：201个节点的数值解
+
+#### 观察与分析：
+- 可以看到，随着节点数增加，数值解逐渐接近解析解。
+- 使用较少节点时，数值解偏离解析解较大，尤其在流速变化较大的区域。
+- 使用较多节点时，数值解与解析解的差异减小，曲线更平滑，显示出更高的精度。
+
+#### 结论与建议：
+- **模拟结果的可靠性**：依赖于网格的细密程度和离散化方法的精度。
+- **验证与校准**：在依赖模拟结果时，必须检查基础假设和实现细节，确保结果的可靠性。
+
+#### 提示：
+- 在实际应用中，选择合适的网格密度和平衡计算成本与精度是关键。
+- 使用更高阶的离散化方法可以显著提高模拟结果的精度。
+
+---
+
+## P40
+
+### 2. Response time of a microfluidic channel
+
+#### 问题描述：
+在微流控通道中，当压力突然增加时，流速 \( q(t) \) 的时间依赖行为是什么？
+
+#### 参数：
+- **通道类型**：圆形通道
+  - 半径 \( r = 400 \, \mu \text{m} \)
+  - 长度 \( l = 10 \, \text{mm} \)
+- **流体密度**：\( \rho = 1000 \, \text{kg/m}^3 \)
+- **动态粘度**：\( \eta = 0.001 \, \text{Pa} \cdot \text{s} \)
+- **压差**：\( \Delta p = 100 \, \text{Pa} \) （在 \( t \ge 0 \) 时）
+
+#### 假设：
+- **刚性壁**：假设通道壁是刚性的，不会变形。
+
+#### 模型方法：
+将通道用网络模拟方法建模。
+
+#### 常微分方程（ODE）：
+\[ \Delta p(t) = \Delta p_{\text{inertia}} + \Delta p_{\text{viscous}} = L_{\text{hyd}} \dot{q}(t) + R_{\text{hyd}} q(t) \]
+
+- \( \Delta p(t) \)：时间 \( t \) 处的压力变化
+- \( \Delta p_{\text{inertia}} \)：惯性压差
+- \( \Delta p_{\text{viscous}} \)：粘性压差
+- \( L_{\text{hyd}} \)：液压电感，表示流体的惯性
+- \( R_{\text{hyd}} \)：液压电阻，表示流体的粘性阻力
+- \( \dot{q}(t) \)：流速的时间导数
+
+#### 解决ODE：
+- 这个ODE是一个一阶非齐次线性微分方程。
+- 可以通过常数变易法或参数变易法来求解。
+
+#### 求解齐次ODE：
+1. 从齐次方程开始：
+\[ 0 = L \frac{dq(t)}{dt} + R q(t) \]
+
+2. 分离变量并积分：
+\[ -\frac{R}{L} dt = \frac{dq(t)}{q(t)} \]
+\[ q(t) = c \cdot e^{-\frac{R}{L} t} \]
+
+#### 使常数变量化：
+1. 将常数 \( c \) 变量化：
+\[ q(t) = c(t) \cdot e^{-\frac{R}{L} t} \]
+
+2. 将这个形式代入原方程：
+\[ \Delta p = L \left( -\frac{R}{L} c(t) \cdot e^{-\frac{R}{L} t} + L \frac{dc(t)}{dt} \cdot e^{-\frac{R}{L} t} + R \cdot c(t) \cdot e^{-\frac{R}{L} t} \right) \]
+\[ \Delta p = L \frac{dc(t)}{dt} \cdot e^{-\frac{R}{L} t} \]
+
+#### 求解 \( c(t) \)：
+1. 从之前的方程出发：
+\[ \Delta p = L \cdot \frac{dc(t)}{dt} \cdot e^{-\frac{R}{L} t} \]
+\[ \frac{\Delta p}{L} e^{\frac{R}{L} t} dt = dc(t) \]
+
+2. 对两边积分：
+\[ c(t) = \frac{\Delta p}{L} \cdot \frac{L}{R} \cdot e^{\frac{R}{L} t} + d = \frac{\Delta p}{R} \cdot e^{\frac{R}{L} t} + d \]
+
+#### 重新代入：
+1. 将 \( c(t) \) 代入 \( q(t) \) 的表达式：
+\[ q(t) = \left( \frac{\Delta p}{R} \cdot e^{\frac{R}{L} t} + d \right) \cdot e^{-\frac{R}{L} t} \]
+
+2. 使用初始条件 \( q(0) = 0 \) 确定常数 \( d \)：
+\[ q(0) = 0 \Rightarrow d = -\frac{\Delta p}{R} \]
+
+3. 得到流速随时间的表达式：
+\[ q(t) = \left( \frac{\Delta p}{R} \cdot e^{\frac{R}{L} t} - \frac{\Delta p}{R} \right) \cdot e^{-\frac{R}{L} t} \]
+\[ q(t) = \frac{\Delta p}{R} \left( 1 - e^{-\frac{t}{\tau}} \right) \]
+其中，\(\tau = \frac{L_{\text{hyd}}}{R_{\text{hyd}}}\)
+
+#### 解的表达式：
+\[ q(t) = \frac{\Delta p}{R_{\text{hyd}}} \left( 1 - e^{-\frac{t}{\tau}} \right) \]
+- 特征响应时间 \(\tau\)：
+\[ \tau = \frac{L_{\text{hyd}}}{R_{\text{hyd}}} = 0.02 \, \text{s} \]
+
