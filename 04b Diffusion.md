@@ -4,9 +4,9 @@
 
 #### 如何在宏观尺度上确定扩散通量？
 
-**菲克第一定律**（Fick's first law）描述了粒子通量取决于浓度梯度：
+==**菲克第一定律**==（Fick's first law）描述了粒子通量取决于浓度梯度：
 \[
-\vec{J}_{\text{Diff}} = -D \nabla c
+\colorbox{lightblue}{$\vec{J}_{\text{Diff}} = -D \nabla c$}
 \]
 - **\(\vec{J}_{\text{Diff}}\)**：扩散通量（Diffusion flux）
 - **\(D\)**：扩散系数（Diffusion coefficient）
@@ -42,9 +42,9 @@
 
 #### 如何在宏观尺度上确定扩散流？
 
-**菲克第二定律（Fick's second law）**描述了浓度随时间的演变：
+==**菲克第二定律**==（Fick's second law）描述了浓度随时间的演变：
 \[
-\frac{\partial c}{\partial t} = -\nabla \cdot \vec{J}_{\text{Diff}} + S = D \Delta c + S
+\colorbox{lightblue}{$\frac{\partial c}{\partial t} = -\nabla \cdot \vec{J}_{\text{Diff}} + S = D \Delta c + S$}
 \]
 - **\(\frac{\partial c}{\partial t}\)**：浓度的时间变化率（Temporal evolution of concentration）
 - **\(\vec{J}_{\text{Diff}}\)**：扩散通量（Diffusion flux）
@@ -84,7 +84,7 @@
 
 # Example
 
-## P
+## P12
 
 ### 氢扩散建模
 

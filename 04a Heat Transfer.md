@@ -6,7 +6,7 @@
 
 热扩散方程描述了非稳态的温度分布：
 \[
-\rho c \frac{\partial T}{\partial t} = -\nabla \cdot \vec{j}_{\text{cond}} + S = \lambda \Delta T + S
+\colorbox{lightblue}{$\rho c \frac{\partial T}{\partial t} = -\nabla \cdot \vec{j}_{\text{cond}} + S = \lambda \Delta T + S$}
 \]
 - **热容（Heat capacity）** \(c\)
 - **密度（Density）** \(\rho\)
@@ -55,7 +55,7 @@
 
 ### 对流：液体和气体
 
-#### 对流（Convection）...
+#### 对流（Convection）
 - 是以下两者的结合：
   - **传导（Conduction）**：热传递
   - **平流（Advection）**：质量传递
@@ -65,7 +65,7 @@
 - **强制对流（Forced convection）**：由外部源引起的对流
 
 #### 传热系数（Heat transfer coefficient）α
-传热系数α描述了固体和液体/气体之间的热能传递。
+传热系数$α$描述了固体和液体/气体之间的热能传递。
 
 #### 详细解释
 
@@ -91,6 +91,18 @@
 - 图中展示了固体和液体之间的对流情况。
 - 固体与液体接触面附近，液体速度较低，随着距离固体表面距离增加，液体速度增加，形成速度梯度。
 - 通过对流，热量从固体传递到流体中或从流体传递到固体中。
+
+---
+
+## Important:
+
+- ### Heat Flux 
+  - #### Conduction: Fourier's Law （温度梯度）
+  - #### Convection: （温度差）
+- ### Heat Flow Power
+  - #### Heat Flux * Area
+- ### Heat Diffusion Equation
+
 
 ---
 
