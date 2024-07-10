@@ -153,3 +153,129 @@
 
 ---
 
+## P18
+
+### 介电双层：电动电位（Dielectric double layer: Zeta potential）
+
+剪切面外的分子能够由于粘性力跟随主体流动
+
+#### 电动电位由剪切面的电势定义
+  - 电动电位（Zeta potential）是指在剪切面上的电势差。定义如下：
+    \[
+    \zeta = \phi(x_{\text{shear}}) - \phi(x \to \infty)
+    \]
+  - 其中，\(\zeta\) 是电动电位，\(\phi(x_{\text{shear}})\) 是剪切面上的电势，\(\phi(x \to \infty)\) 是远离表面时的电势（趋近于零）。
+
+#### 剪切距离 \(x_{\text{shear}}\) 通常由德拜长度给出
+  - 剪切距离 \(x_{\text{shear}}\) 通常用德拜长度 \(l_D\) 表示，德拜长度的公式如下：
+    \[
+    l_D = \sqrt{\frac{\epsilon_0 \epsilon_r k T}{e^2 \sum_i c_i z_i^{*2}}}
+    \]
+  - 其中，\(\epsilon_0\) 是真空中的电容率，\(\epsilon_r\) 是相对电容率，\(k\) 是玻尔兹曼常数，\(T\) 是温度，\(e\) 是电子电荷，\(c_i\) 是离子浓度，\(z_i^*\) 是离子的有效电荷数。
+
+#### 图示解释
+右侧的图片展示了电动电位的图示：
+
+- 上方灰色区域表示带正电荷的电极表面（+）。
+- 绿色圆圈表示带负电荷的离子（-），粉红色圆圈表示带正电荷的离子（+）。
+- 剪切面（shear plane）用一条黑色实线表示，表示在该面内外的流体行为不同。
+- 电势 \(\phi\) 随着距离 \(x\) 的变化曲线显示在左侧，电势在剪切面位置急剧下降，定义了电动电位 \(\zeta\)。
+- 德拜长度 \(l_D\) 表示电势显著衰减的距离范围。
+
+#### 总结
+
+电动电位 \(\zeta\) 是描述剪切面处电势差的重要参数，它影响流体中离子的运动和分布。剪切距离 \(x_{\text{shear}}\) 通常由德拜长度来表征，而德拜长度是由溶液的电解质浓度和温度等因素决定的。这个模型对于理解电流体力学和电泳等现象非常重要。
+
+---
+
+## P47
+
+### Simplified Navier-Stokes Equation for Microfluidic Flow
+
+在微流体流动中，简化的Navier-Stokes方程如下所示：
+
+\[ \eta \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial v_z}{\partial r} \right) \right) = \frac{\Delta P}{L} + \epsilon_0 \epsilon_r \nabla^2 \phi_{El} \frac{\Delta V}{L} \]
+
+这表示在微流体环境中，由于惯性项可以忽略，方程变得线性。因此，速度的叠加原理（superposition principle）在这种情况下是适用的。
+
+#### 边界条件
+- 在管道中心处，速度梯度为零，即：\[ \left. \frac{\partial v_z}{\partial r} \right|_{r=0} = 0 \]
+- 在管道壁面处，速度为零，即：\[ v_z |_{r=R} = 0 \]
+
+#### 简化后的方程
+由于没有惯性项，Navier-Stokes方程变得线性，可以进行速度叠加。总速度 \( v_z(r) \) 可以表示为压力驱动速度和电渗驱动速度的叠加：
+
+\[ v_z(r) = v_{z,P}(r) + v_{z,EO}(r) \]
+
+#### Hagen-Poiseuille流动
+由于压力梯度引起的速度分布为：
+
+\[ v_{z,P}(r) = \frac{1}{4\eta} (R^2 - r^2) \frac{\Delta P}{L} \]
+
+#### 电渗流动
+由于电渗效应引起的速度分布为：
+
+\[ v_{z,EO}(r) = \left( 1 - \frac{I_0(r/l_D)}{I_0(R/l_D)} \right) \frac{\epsilon_0 \epsilon_r \zeta}{\eta} \frac{\Delta V}{L} \]
+
+其中：
+- \( I_0 \) 是第一类零阶贝塞尔函数
+- \( l_D \) 是德拜长度
+- \(\epsilon_0\) 是真空介电常数
+- \(\epsilon_r\) 是相对介电常数
+- \(\zeta\) 是zeta电位
+
+#### 结论
+在微流体环境中，由于惯性力较小可以忽略，Navier-Stokes方程变得线性，这使得流体速度的不同分量（如压力驱动和电渗驱动）可以简单叠加。这种线性特性使得分析微流体系统中的流动行为更加简便。
+
+### 关于线性性的讨论
+
+#### 完整的Navier-Stokes方程
+在不可压缩流体的情况下，NSE的完整形式为：
+
+\[ \rho \left( \frac{\partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v} \right) = -\nabla p + \eta \nabla^2 \mathbf{v} + \mathbf{f} \]
+
+其中：
+- \(\rho\) 是流体的密度
+- \(\mathbf{v}\) 是速度场
+- \(p\) 是压力场
+- \(\eta\) 是粘性系数
+- \(\mathbf{f}\) 是外力（如电场力）
+
+#### 惯性项的影响
+在上述方程中，惯性项（即 \(\rho (\partial \mathbf{v}/\partial t + \mathbf{v} \cdot \nabla \mathbf{v})\)）是非线性的。具体而言：
+- \(\partial \mathbf{v}/\partial t\) 是速度的时间导数，表示流体的加速度。
+- \(\mathbf{v} \cdot \nabla \mathbf{v}\) 是速度的对流项，表示由于速度梯度引起的非线性变化。
+
+非线性项的存在使得方程整体呈现非线性性质，这种情况下，两个速度场的叠加不再满足原方程，因为非线性项会产生交叉项。
+
+#### 简化的Navier-Stokes方程
+在低雷诺数条件下（即流体的惯性力远小于粘性力），惯性项可以忽略，简化后的NSE为：
+
+\[ 0 = -\nabla p + \eta \nabla^2 \mathbf{v} + \mathbf{f} \]
+
+或者在某些情况下，惯性项仅表现为常数项，不影响线性叠加性：
+
+\[ \eta \left( \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial v_z}{\partial r} \right) \right) = \frac{\Delta P}{L} + \epsilon_0 \epsilon_r \nabla^2 \phi_{El} \frac{\Delta V}{L} \]
+
+#### 线性可叠加性
+在线性方程中，叠加原理（Superposition Principle）成立。这意味着如果\(\mathbf{v}_1\) 和 \(\mathbf{v}_2\) 是方程的解，则它们的线性组合 \(\mathbf{v} = a \mathbf{v}_1 + b \mathbf{v}_2\) 也是方程的解。具体而言，简化后的方程为：
+
+\[ \eta \nabla^2 \mathbf{v} = -\nabla p + \mathbf{f} \]
+
+在这种线性方程中，如果有两个解\(\mathbf{v}_1\) 和 \(\mathbf{v}_2\)，则：
+
+\[ \eta \nabla^2 \mathbf{v}_1 = -\nabla p + \mathbf{f}_1 \]
+\[ \eta \nabla^2 \mathbf{v}_2 = -\nabla p + \mathbf{f}_2 \]
+
+那么其线性组合：
+
+\[ \mathbf{v} = a \mathbf{v}_1 + b \mathbf{v}_2 \]
+
+也是方程的解，因为：
+
+\[ \eta \nabla^2 \mathbf{v} = \eta \nabla^2 (a \mathbf{v}_1 + b \mathbf{v}_2) = a (\eta \nabla^2 \mathbf{v}_1) + b (\eta \nabla^2 \mathbf{v}_2) = a (-\nabla p + \mathbf{f}_1) + b (-\nabla p + \mathbf{f}_2) \]
+
+这仍然满足原方程。因此，在忽略惯性项的情况下，NSE是线性的，可以对不同驱动力（如压力驱动和电渗驱动）的速度场进行叠加。
+
+#### 结论
+当惯性项不存在时，Navier-Stokes方程简化为线性方程，因此满足叠加原理。这使得我们可以将由于不同驱动力（如压力差和电场）引起的速度场简单地叠加在一起，得到总的速度场。
