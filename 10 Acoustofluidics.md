@@ -3,17 +3,17 @@
 ### 扰动理论
 
 #### 对速度和密度做同样的处理
-    - 密度场：\(\rho(\vec{r}, t) = \rho_0 + \tilde{\rho}_1(\vec{r}, t)\)
-    - 压力场：\(p(\vec{r}, t) = p_0 + \tilde{p}_1(\vec{r}, t)\)
-    - 速度场：\(\vec{v}(\vec{r}, t) = \vec{v}_0 + \tilde{\vec{v}}_1(\vec{r}, t) = \vec{0} + \tilde{\vec{v}}_1(\vec{r}, t)\)
+- 密度场：\(\rho(\vec{r}, t) = \rho_0 + \tilde{\rho}_1(\vec{r}, t)\)
+- 压力场：\(p(\vec{r}, t) = p_0 + \tilde{p}_1(\vec{r}, t)\)
+- 速度场：\(\vec{v}(\vec{r}, t) = \vec{v}_0 + \tilde{\vec{v}}_1(\vec{r}, t) = \vec{0} + \tilde{\vec{v}}_1(\vec{r}, t)\)
 
 #### 将这些表达式代入以下方程
-    - \[\frac{\partial}{\partial t} (\rho_0 + \tilde{\rho}_1) + \nabla \cdot ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = 0\]
-    - \[\frac{\partial}{\partial t} ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) + \tilde{\vec{v}}_1 \cdot \nabla ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = -\nabla(p_0 + \tilde{p}_1) + \nabla \cdot (\eta \nabla \tilde{\vec{v}}_1)\]
+- \[\frac{\partial}{\partial t} (\rho_0 + \tilde{\rho}_1) + \nabla \cdot ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = 0\]
+- \[\frac{\partial}{\partial t} ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) + \tilde{\vec{v}}_1 \cdot \nabla ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = -\nabla(p_0 + \tilde{p}_1) + \nabla \cdot (\eta \nabla \tilde{\vec{v}}_1)\]
 
 #### 简化这些方程，使用以下规则
-    - 假设一阶场的乘积为零。
-    - 一阶场是时谐的，满足 \(\frac{\partial}{\partial t}\tilde{\rho}_1(\vec{r}, t) = -i\omega \tilde{\rho}_1(\vec{r}, t)\)。
+- 假设一阶场的乘积为零。
+- 一阶场是时谐的，满足 \(\frac{\partial}{\partial t}\tilde{\rho}_1(\vec{r}, t) = -i\omega \tilde{\rho}_1(\vec{r}, t)\)。
 
 ---
 
@@ -22,14 +22,14 @@
 ### 连续性方程
 
 #### 原方程
-    - \[\frac{\partial}{\partial t} (\rho_0 + \tilde{\rho}_1) + \nabla \cdot ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = 0\]
+- \[\frac{\partial}{\partial t} (\rho_0 + \tilde{\rho}_1) + \nabla \cdot ((\rho_0 + \tilde{\rho}_1)\tilde{\vec{v}}_1) = 0\]
 
 #### 代入 \(\vec{v}_0 = 0\)，并且 \(\rho_0\) 是常数：
-    - \[\frac{\partial}{\partial t} \tilde{\rho}_1 + \nabla \cdot (\rho_0 \tilde{\vec{v}}_1) = 0\]
+- \[\frac{\partial}{\partial t} \tilde{\rho}_1 + \nabla \cdot (\rho_0 \tilde{\vec{v}}_1) = 0\]
 
 #### 使用时谐假设：
-    - \[-i\omega \rho_1 = -\nabla \cdot (\rho_0 \tilde{\vec{v}}_1)\]
-    - \[-i\omega \rho_1 = -\rho_0 \nabla \cdot \tilde{\vec{v}}_1\]
+- \[-i\omega \rho_1 = -\nabla \cdot (\rho_0 \tilde{\vec{v}}_1)\]
+- \[-i\omega \rho_1 = -\rho_0 \nabla \cdot \tilde{\vec{v}}_1\]
 
 在这里，连续性方程可以这样化简的原因是基于以下几点：
 1. **小扰动假设**：假设扰动较小，忽略一阶以上的项，这样使得方程线性化。
