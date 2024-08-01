@@ -279,3 +279,38 @@
 
 #### 结论
 当惯性项不存在时，Navier-Stokes方程简化为线性方程，因此满足叠加原理。这使得我们可以将由于不同驱动力（如压力差和电场）引起的速度场简单地叠加在一起，得到总的速度场。
+
+---
+
+# Exercise 
+
+## 1
+
+In a Fragment Analyzer, two main electrokinetic effects are typically observed: electrophoresis and electroosmosis. These effects are crucial for the separation and analysis of nucleic acids and other charged biomolecules. Let's explore each in detail:
+
+### 1. Electrophoresis
+
+**Electrophoresis** is the movement of charged particles in a fluid under the influence of an electric field. In the context of a Fragment Analyzer, the following details apply:
+
+- **Types of Ions and Molecules Involved:**
+  - Negatively charged DNA or RNA fragments.
+  - The buffer ions that provide the conductive medium for the electric field.
+
+- **Mechanism and Direction of Movement:**
+  - When an electric field is applied, the negatively charged nucleic acid fragments (due to their phosphate backbone) move towards the positively charged anode.
+  - Smaller fragments experience less frictional resistance and therefore migrate faster than larger ones, allowing for separation based on size.
+
+### 2. Electroosmosis
+
+**Electroosmosis** refers to the bulk movement of liquid (usually the buffer solution) through a capillary or porous medium induced by an electric field. This is often due to the interaction between the electric field and the double layer of ions at the capillary walls.
+
+- **Types of Ions and Liquids Involved:**
+  - Buffer solution containing various ions (both cations and anions).
+  - The interaction typically involves cations like sodium (Na⁺) or potassium (K⁺) in the buffer that form a double layer near the negatively charged capillary walls.
+
+- **Mechanism and Direction of Movement:**
+  - The capillary walls in the Fragment Analyzer often carry a negative charge, attracting a layer of cations.
+  - When an electric field is applied, these cations move towards the cathode, dragging the bulk liquid (buffer solution) with them in the same direction.
+  - This movement of the buffer can enhance or interfere with the migration of the nucleic acid fragments, depending on the system setup and buffer composition.
+
+In summary, electrophoresis causes the DNA/RNA fragments to move towards the anode due to their negative charge, while electroosmosis causes the buffer solution to move, typically towards the cathode, due to the interaction with cations in the electric field. Both effects are essential for the efficient separation and analysis of fragments in the Fragment Analyzer.
